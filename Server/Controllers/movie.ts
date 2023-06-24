@@ -8,6 +8,17 @@ import { Request, Response, NextFunction } from "express";
 import Movie from "../Models/movie";
 
 /**
+ * Removes empty spaces from string array
+ */
+function SanitizeArray(unsunatizedArray: String[]) {
+    let sanitizedArray: string[] = Array<string>();
+    for (const unsunatizedString of unsunatizedArray) {
+        sanitizedArray.push(unsunatizedString.trim());
+    }
+    return sanitizedArray;
+}
+
+/**
  * Fucntion get list of movies
  */
 export function DisplayMovieList(
@@ -39,6 +50,47 @@ export function DisplayMovieByID(
     Movie.findById({ _id: id })
         .then(function (data) {
             res.status(200).json(data);
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
+}
+
+/**
+ * Function to handle adding movie in database
+ */
+export function AddMovie(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void {
+    // Spliting the data by comma and removing white spaces
+    let genres = SanitizeArray((req.body.genres as string).split(","));
+    let directors = SanitizeArray((req.body.directors as string).split(","));
+    let actors = SanitizeArray((req.body.actors as string).split(","));
+    let writers = SanitizeArray((req.body.writers as string).split(","));
+
+    // Creating new object of movie
+    let movie = new Movie({
+        movieID: req.body.movieID,
+        title: req.body.title,
+        studio: req.body.studio,
+        directors: directors,
+        writers: writers,
+        genres: genres,
+        actors: actors,
+        length: req.body.length,
+        year: req.body.year,
+        shortDescription: req.body.shortDescription,
+        mpaRating: req.body.mpaRating,
+        criticsRating: req.body.criticsRating,
+        posterLink: req.body.posterLink,
+    });
+
+    // Adding movie in database
+    Movie.create(movie)
+        .then(function (data) {
+            res.status(200).json(movie);
         })
         .catch(function (err) {
             console.error(err);

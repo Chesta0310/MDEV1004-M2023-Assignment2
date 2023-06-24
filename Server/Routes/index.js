@@ -15,5 +15,8 @@ router.get("/list", function (req, res, next) {
 router.get("/find/:id", function (req, res, next) {
     (0, movie_1.DisplayMovieByID)(req, res, next);
 });
+router.post("/add", function (req, res, next) {
+    (0, movie_1.AddMovie)(req, res, next);
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map
