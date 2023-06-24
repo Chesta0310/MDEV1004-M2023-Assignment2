@@ -31,5 +31,8 @@ router.post("/register", function (req, res, next) {
 router.post("/login", function (req, res, next) {
     (0, user_1.ProcessLogin)(req, res, next);
 });
+router.get("/logout", function (req, res, next) {
+    (0, user_1.ProcessLogout)(req, res, next);
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map

@@ -84,3 +84,20 @@ export function ProcessLogin(
         });
     })(req, res, next);
 }
+
+/**
+ * Function to handle logout
+ */
+export function ProcessLogout(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void {
+    // Using logout function provided by passport js to logout
+    req.logout(() => {
+        // When logout is successful
+        console.log("User Logged Out");
+        // return response
+        res.json({ success: true, msg: "User Logged out Successfully!" });
+    });
+}

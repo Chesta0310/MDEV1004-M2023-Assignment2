@@ -10,7 +10,11 @@ import {
     DisplayMovieList,
     UpdateMovie,
 } from "../Controllers/movie";
-import { ProcessLogin, ProcessRegisterPage } from "../Controllers/user";
+import {
+    ProcessLogin,
+    ProcessLogout,
+    ProcessRegisterPage,
+} from "../Controllers/user";
 let router = express.Router();
 
 /* GET home page. */
@@ -44,6 +48,10 @@ router.post("/register", function (req, res, next) {
 
 router.post("/login", function (req, res, next) {
     ProcessLogin(req, res, next);
+});
+
+router.get("/logout", function (req, res, next) {
+    ProcessLogout(req, res, next);
 });
 
 export default router;
