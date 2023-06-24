@@ -9,6 +9,15 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
+// modules for authentication
+import session from "express-session";
+import passport from "passport";
+import passportLocal from "passport-local";
+
+// authentication objects
+let strategy = passportLocal.Strategy; // alias
+import User from "../Models/user";
+
 // database modules
 import mongoose from "mongoose";
 import db from "./db";
@@ -34,6 +43,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../../Client")));
+
+// setup express session
+app.use(
+    session({
+        secret: db.secret,
+        saveUninitialized: false,
+        resave: false,
+    })
+);
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// implement an Auth Strategy
+passport.use(User.createStrategy());
+// serialize and deserialize user data
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use("/api/", indexRouter);
 
