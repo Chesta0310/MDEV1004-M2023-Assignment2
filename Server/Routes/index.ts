@@ -7,6 +7,7 @@ import {
     AddMovie,
     DisplayMovieByID,
     DisplayMovieList,
+    UpdateMovie,
 } from "../Controllers/movie";
 let router = express.Router();
 
@@ -25,6 +26,10 @@ router.get("/find/:id", function (req, res, next) {
 
 router.post("/add", function (req, res, next) {
     AddMovie(req, res, next);
+});
+
+router.post("/update/:id", function (req, res, next) {
+    UpdateMovie(req, res, next);
 });
 
 export default router;

@@ -96,3 +96,48 @@ export function AddMovie(
             console.error(err);
         });
 }
+
+/**
+ * Function to handle updating movie in database
+ */
+export function UpdateMovie(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void {
+    // Getting the id from url params
+    let id = req.params.id;
+
+    // Spliting the data by comma and removing white spaces
+    let genres = SanitizeArray((req.body.genres as string).split(","));
+    let directors = SanitizeArray((req.body.directors as string).split(","));
+    let actors = SanitizeArray((req.body.actors as string).split(","));
+    let writers = SanitizeArray((req.body.writers as string).split(","));
+
+    // Creating new object of movie
+    let movieToUpdate = new Movie({
+        _id: id,
+        movieID: req.body.movieID,
+        title: req.body.title,
+        studio: req.body.studio,
+        directors: directors,
+        writers: writers,
+        genres: genres,
+        actors: actors,
+        length: req.body.length,
+        year: req.body.year,
+        shortDescription: req.body.shortDescription,
+        mpaRating: req.body.mpaRating,
+        criticsRating: req.body.criticsRating,
+        posterLink: req.body.posterLink,
+    });
+
+    // Updating the movie with id
+    Movie.updateOne({ _id: id }, movieToUpdate)
+        .then(function (data) {
+            res.status(200).json(movieToUpdate);
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
+}
