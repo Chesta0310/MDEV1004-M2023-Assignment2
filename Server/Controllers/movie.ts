@@ -141,3 +141,24 @@ export function UpdateMovie(
             console.error(err);
         });
 }
+
+/**
+ * Function to handle deleting movie in database
+ */
+export function DeleteMovie(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void {
+    // Getting the id from url params
+    let id = req.params.id;
+
+    // Deleting movie with id from database
+    Movie.deleteOne({ _id: id })
+        .then(function (data) {
+            res.status(200).json(id);
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
+}

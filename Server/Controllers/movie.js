@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateMovie = exports.AddMovie = exports.DisplayMovieByID = exports.DisplayMovieList = void 0;
+exports.DeleteMovie = exports.UpdateMovie = exports.AddMovie = exports.DisplayMovieByID = exports.DisplayMovieList = void 0;
 const movie_1 = __importDefault(require("../Models/movie"));
 function SanitizeArray(unsunatizedArray) {
     let sanitizedArray = Array();
@@ -93,4 +93,15 @@ function UpdateMovie(req, res, next) {
     });
 }
 exports.UpdateMovie = UpdateMovie;
+function DeleteMovie(req, res, next) {
+    let id = req.params.id;
+    movie_1.default.deleteOne({ _id: id })
+        .then(function (data) {
+        res.status(200).json(id);
+    })
+        .catch(function (err) {
+        console.error(err);
+    });
+}
+exports.DeleteMovie = DeleteMovie;
 //# sourceMappingURL=movie.js.map

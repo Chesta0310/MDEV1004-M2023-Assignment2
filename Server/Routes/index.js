@@ -21,5 +21,8 @@ router.post("/add", function (req, res, next) {
 router.post("/update/:id", function (req, res, next) {
     (0, movie_1.UpdateMovie)(req, res, next);
 });
+router.delete("/delete/:id", function (req, res, next) {
+    (0, movie_1.DeleteMovie)(req, res, next);
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map

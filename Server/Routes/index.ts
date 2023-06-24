@@ -5,6 +5,7 @@
 import express from "express";
 import {
     AddMovie,
+    DeleteMovie,
     DisplayMovieByID,
     DisplayMovieList,
     UpdateMovie,
@@ -30,6 +31,10 @@ router.post("/add", function (req, res, next) {
 
 router.post("/update/:id", function (req, res, next) {
     UpdateMovie(req, res, next);
+});
+
+router.delete("/delete/:id", function (req, res, next) {
+    DeleteMovie(req, res, next);
 });
 
 export default router;
