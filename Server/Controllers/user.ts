@@ -46,3 +46,41 @@ export function ProcessRegisterPage(
         });
     });
 }
+
+/**
+ * Function to handle login
+ */
+export function ProcessLogin(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void {
+    passport.authenticate("local", (err: any, user: any, info: any) => {
+        // are there server errors?
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
+        // are the login errors?
+        if (!user) {
+            return res.json({
+                success: false,
+                msg: "User Not Logged in Successfully!",
+                user: user,
+            });
+        }
+        req.login(user, (err) => {
+            // are there DB errors?
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            // return response
+            return res.json({
+                success: true,
+                msg: "User Logged in Successfully!",
+                user: user,
+            });
+        });
+    })(req, res, next);
+}

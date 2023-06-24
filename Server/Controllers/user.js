@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProcessRegisterPage = void 0;
+exports.ProcessLogin = exports.ProcessRegisterPage = void 0;
 const passport_1 = __importDefault(require("passport"));
 const user_1 = __importDefault(require("../Models/user"));
 function ProcessRegisterPage(req, res, next) {
@@ -33,4 +33,31 @@ function ProcessRegisterPage(req, res, next) {
     });
 }
 exports.ProcessRegisterPage = ProcessRegisterPage;
+function ProcessLogin(req, res, next) {
+    passport_1.default.authenticate("local", (err, user, info) => {
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
+        if (!user) {
+            return res.json({
+                success: false,
+                msg: "User Not Logged in Successfully!",
+                user: user,
+            });
+        }
+        req.login(user, (err) => {
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            return res.json({
+                success: true,
+                msg: "User Logged in Successfully!",
+                user: user,
+            });
+        });
+    })(req, res, next);
+}
+exports.ProcessLogin = ProcessLogin;
 //# sourceMappingURL=user.js.map

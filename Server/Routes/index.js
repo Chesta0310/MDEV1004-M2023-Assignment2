@@ -28,5 +28,8 @@ router.delete("/delete/:id", function (req, res, next) {
 router.post("/register", function (req, res, next) {
     (0, user_1.ProcessRegisterPage)(req, res, next);
 });
+router.post("/login", function (req, res, next) {
+    (0, user_1.ProcessLogin)(req, res, next);
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map
