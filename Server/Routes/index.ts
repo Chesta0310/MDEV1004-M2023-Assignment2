@@ -10,6 +10,7 @@ import {
     DisplayMovieList,
     UpdateMovie,
 } from "../Controllers/movie";
+import { ProcessRegisterPage } from "../Controllers/user";
 let router = express.Router();
 
 /* GET home page. */
@@ -35,6 +36,10 @@ router.post("/update/:id", function (req, res, next) {
 
 router.delete("/delete/:id", function (req, res, next) {
     DeleteMovie(req, res, next);
+});
+
+router.post("/register", function (req, res, next) {
+    ProcessRegisterPage(req, res, next);
 });
 
 export default router;
